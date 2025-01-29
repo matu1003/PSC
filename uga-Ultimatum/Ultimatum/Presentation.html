@@ -1,0 +1,25 @@
+{{ block title }}Introduction{{ endblock }}
+
+{{ block content }}
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de l'Ultimatum</title>
+
+    <div class="container">
+        <h1>Bienvenue au jeu de l'Ultimatum</h1>
+        <p><strong>Nombre de joueurs:</strong> 2</p>
+        <p><strong>Règles du jeu:</strong></p>
+        <p>Une somme totale de 100$ est mise en jeu. Un premier joueur propose une portion de cette somme à son adversaire.</p>
+        <ul>
+            <li>Si le second joueur accepte cette proposition, il reçoit cette offre et le joueur 1 obtient le reste des 100$.</li>
+            <li>Si le second joueur refuse, une autre répartition sera donnée</li>
+        </ul>
+        <footer>
+            &copy; 2025 Jeu de l'Ultimatum. Tous droits réservés.
+        </footer>
+    </div>
+{{ formfields }}
+
+{{ next_button }}
+
+{{ endblock }}
