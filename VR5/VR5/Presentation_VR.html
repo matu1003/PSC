@@ -1,0 +1,15 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}Déroulement de l'expérience{{ endblock }}
+
+{{ block content }}
+
+{{ formfields }}
+<p>Dans cette expérience, nous utiliserons le mécanisme dit de veto-ranking, à 5 choix.</p>
+
+<p>Le principe est simple : chaque joueur doit veto deux choix, puis classe les 3 restants. </p>
+
+<form method="post">
+    <button type="submit" class="btn btn-primary">Passer à l'étape suivante</button>
+</form>
+
+{{ endblock }}

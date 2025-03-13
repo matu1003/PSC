@@ -1,0 +1,67 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}Choix_honnêtes{{ endblock }}
+
+{{ block content }}
+
+Vous devez ici choisir votre ordre. 
+
+
+    <form method="post">
+        
+        <div class="choice-container">
+            <label for="choice_1">Premier choix:</label>
+            <select id="choice_1" name="CHOIX_1" required>
+                <option value="">-- Sélectionnez --</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+            </select>
+        </div>
+
+        <div class="choice-container">
+            <label for="choice_2">Deuxième choix:</label>
+            <select id="choice_2" name="CHOIX_2" required>
+                <option value="">-- Sélectionnez --</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+            </select>
+        </div>
+
+        <div class="choice-container">
+            <label for="choice_3">Troisième choix:</label>
+            <select id="choice_3" name="CHOIX_3" required>
+                <option value="">-- Sélectionnez --</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+            </select>
+        </div>
+
+        <button type="submit">Valider</button>
+    </form>
+
+    <script>
+        // Script pour éviter des doublons dans les choix
+        const selects = document.querySelectorAll('select');
+        selects.forEach(select => {
+            select.addEventListener('change', () => {
+                const selectedValues = Array.from(selects).map(s => s.value);
+                selects.forEach(s => {
+                    Array.from(s.options).forEach(option => {
+                        if (selectedValues.includes(option.value) && option.value !== s.value) {
+                            option.disabled = true;
+                        } else {
+                            option.disabled = false;
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+    
+
+{{ next_button }}
+
+{{ endblock }}

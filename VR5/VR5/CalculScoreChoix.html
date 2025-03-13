@@ -1,0 +1,25 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}Résultats du round{{ endblock }}
+
+{{ block content }}
+
+<h3>Choix Sélectionné</h3>
+    {% if final_choice == "Aucun choix possible" %}
+        <p>Aucun choix n'était possible après les vetos.</p>
+    {% else %}
+        <p>Le choix final sélectionné est : <strong>{{ final_choice }}</strong></p>
+    {% endif %}
+
+    <h3>Scores du Round</h3>
+    <ul>
+        <li>Joueur 1 : {{ score_p1 }} points</li>
+        <li>Joueur 2 : {{ score_p2 }} points</li>
+    </ul>
+
+    <p>Passons au prochain round.</p>
+
+<form method="post">
+    <button type="submit" class="btn btn-primary">Passer au prochain round</button>
+</form>
+
+{{ endblock }}
