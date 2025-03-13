@@ -2,6 +2,44 @@
 {% load otree static %}
 
 {% block global_styles  %}
+<style>
+  #score-container {
+  position: fixed;
+  top: 10px;
+  right: 20px; /* Déplacement à droite */
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.score-label {
+  display: flex;
+  align-items: center;
+}
+
+.score-value {
+  margin-left: 8px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #ffcc00;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.score-value.updated {
+  animation: pop 0.3s ease-out;
+}
+</style>
+
 {% endblock %}
 
 {% block global_scripts  %}

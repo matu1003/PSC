@@ -2,6 +2,9 @@
 {{ block title }}Résultats du round{{ endblock }}
 
 {{ block content }}
+<div id="score-container">
+    <span class="score-label">⭐ Score_total: <span class="score-value">{{ total_score }}</span></span>
+</div>
 
 <h3>Choix Sélectionné</h3>
     {% if final_choice == "Aucun choix possible" %}
