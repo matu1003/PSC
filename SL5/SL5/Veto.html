@@ -1,0 +1,87 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}Choix des vétos et classement{{ endblock }}
+
+{{ block content }}
+
+<div id="score-container">
+    <span class="score-label">⭐ Score_total: <span class="score-value">{{ total_score }}</span></span>
+</div>
+
+<h4> <i>Rappel des profils de préférences</i></h4>
+
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            font-size: 18px;
+        }
+        th, td {
+            border: 2px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+
+    <table>
+        <tr>
+            <th>Rang</th>
+            <th>Votre Profil</th>
+            <th>Profil Adversaire</th>
+        </tr>
+        {% for rank, my_choice, opp_choice in combined_profiles %}
+        <tr>
+            <td>{{ rank }}</td>
+            <td>{{ my_choice }}</td>
+            <td>{{ opp_choice }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    <h3>Choisissez vos vetos </h3>
+
+<form method="post">
+
+    <p><b>Choisissez vos trois préférences à proposer: :</b></p>
+    <label for="choix1">Premier choix :</label>
+    <select name="choix1" required>
+        <option value="">-- Sélectionnez --</option>
+        {% for option in my_profile %}
+            <option value="{{ option }}">{{ option }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <br>
+    <label for="choix2">Deuxième choix :</label>
+    <select name="choix2" required>
+        <option value="">-- Sélectionnez --</option>
+        {% for option in my_profile %}
+            <option value="{{ option }}">{{ option }}</option>
+        {% endfor %}
+    </select>
+    <br>
+        <br>
+        <label for="choix3">Troisème choix :</label>
+        <select name="choix3" required>
+            <option value="">-- Sélectionnez --</option>
+            {% for option in my_profile %}
+                <option value="{{ option }}">{{ option }}</option>
+            {% endfor %}
+        </select>
+    <hr>
+
+    <br>
+    <br>
+    <button type="submit"  class="btn btn-primary"> Passer à l'étape suivante</button>
+</form>
+
+
+{{ endblock }}

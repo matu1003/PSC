@@ -1,0 +1,26 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}Résultats globaux{{ endblock }}
+
+{{ block content }}
+
+{{ formfields }}
+<div class="container text-center mt-5">
+    <div class="card shadow-lg p-4">
+        <h2 class="mb-4">🎉 Merci d'avoir participé ! 🎉</h2>
+        <p class="lead">Voici un récapitulatif de vos performances :</p>
+
+        <div class="alert alert-primary mt-3">
+            <h4>🏆 Votre classement : <strong>{{classement}}</strong></h4>
+        </div>
+
+        <div class="alert alert-success">
+            <h4>🔢 Votre score : <strong>{{score}}</strong></h4>
+        </div>
+
+        <div class="alert alert-warning">
+            <h4>🥇 Score du premier : <strong>{{scorePrem}}</strong></h4>
+        </div>
+    </div>
+</div>
+
+{{ endblock }}

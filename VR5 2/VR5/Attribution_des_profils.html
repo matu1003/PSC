@@ -1,0 +1,52 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}Voici vos préférences ainsi que celles de votre adversaire{{ endblock }}
+
+{{ block content }}
+<div id="score-container">
+    <span class="score-label">⭐ Score_total: <span class="score-value">{{ total_score }}</span></span>
+</div>
+
+
+    <style>
+        table {
+            width: 50%;  /* Élargir le tableau */
+            border-collapse: collapse;  /* Fusionner les bordures */
+            margin: 20px auto;  /* Centrer le tableau */
+            font-size: 18px;
+        }
+        th, td {
+            border: 2px solid black;  /* Bordures épaisses pour chaque case */
+            padding: 10px;  /* Ajout d'espace dans les cellules */
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;  /* Fond gris clair pour l'en-tête */
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;  /* Lignes alternées en gris clair */
+        }
+    </style>
+
+    <table>
+        <tr>
+            <th>Rang</th>
+            <th>Votre profil de préférences</th>
+            <th>Profil de l'adversaire</th>
+        </tr>
+        {% for rank, my_choice, opp_choice in combined_profiles %}
+        <tr>
+            <td>{{ rank }}</td>
+            <td>{{ my_choice }}</td>
+            <td>{{ opp_choice }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p>Vous pouvez passer à l'étape suivante.</p>
+
+<form method="post">
+    <button type="submit" class="btn btn-primary">Passer à l'étape suivante</button>
+</form>
+
+{{ endblock }}

@@ -1,12 +1,113 @@
 {{ extends 'global/Page.html' }}
-{{ block title }}Déroulement de l'expérience{{ endblock }}
 
 {{ block content }}
 
 {{ formfields }}
-<p>Dans cette expérience, nous utiliserons le mécanisme dit de veto-ranking, à 5 choix.</p>
+<style>
+       body {
+           font-family: Arial, sans-serif;
+           margin: 40px;
+       }
+       h2 {
+           text-align: center;
+       }
+       .container {
+           display: flex;
+           flex-wrap: nowrap;
+           justify-content: space-between;
+           align-items: flex-start;
+           margin-top: 20px;
+       }
+       table {
+           width: 50%;
+           border-collapse: collapse;
+           flex-shrink: 0;
+       }
+       th, td {
+           border: 1px solid black;
+           padding: 8px;
+           text-align: center;
+           min-width: 120px; /* Empêcher l'écrasement */
+       }
+       th {
+           background-color: #2c4870;
+           color: white;
+       }
+       .side-sections {
+           display: flex;
+           flex-direction: column;
+           justify-content: flex-start;
+           width: 25%;
+           flex-shrink: 0;
+       }
+       .veto, .classement {
+           padding: 10px;
+           text-align: center;
+           margin-bottom: 10px;
+       }
+       .veto {
+           background-color: #d88050;
+           color: white;
+       }
+       .classement {
+           background-color: #834197;
+           color: white;
+       }
+   </style>
+<body>
 
-<p>Le principe est simple : chaque joueur doit veto deux choix, puis classe les 3 restants. </p>
+    <h2>Présentation du Veto Rank</h2>
+
+    <p>Dans cette expérience, nous utiliserons le mécanisme dit de <em>veto-ranking</em>, à 5 choix.</p>
+
+    <p>Le principe est simple : chaque joueur doit <strong>veto</strong> deux choix, puis classe les 3 restants.</p>
+
+    <h3><em>Exemple (volontairement trivial)</em></h3>
+
+    <div class="container">
+        <table>
+            <tr>
+                <th>Vos préférences</th>
+                <th>Celles de votre adversaire</th>
+            </tr>
+            <tr>
+                <td>Hippocampe</td>
+                <td>Hippocampe</td>
+            </tr>
+            <tr>
+                <td>Lama</td>
+                <td>Rouge-gorge</td>
+            </tr>
+            <tr>
+                <td>Rouge-gorge</td>
+                <td>Vache</td>
+            </tr>
+            <tr>
+                <td>Fourmi</td>
+                <td>Fourmi</td>
+            </tr>
+            <tr>
+                <td>Vache</td>
+                <td>Lama</td>
+            </tr>
+        </table>
+
+        <div>
+            <div class="veto">
+                <h3>Veto</h3>
+                <p>Fourmi</p>
+                <p>Vache</p>
+            </div>
+
+            <div class="classement">
+                <h3>Classement des restants</h3>
+                <p>1 - Hippocampe</p>
+                <p>2 - Lama</p>
+                <p>3 - Rouge-gorge</p>
+            </div>
+        </div>
+    </div>
+
 
 <form method="post">
     <button type="submit" class="btn btn-primary">Passer à l'étape suivante</button>
