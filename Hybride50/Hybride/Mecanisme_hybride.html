@@ -1,0 +1,117 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}Mécanisme hybride{{ endblock }}
+
+{{ block content }}
+
+<style>
+    body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f9f9f9;
+        padding: 40px;
+        color: #333;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        background-color: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #2c4870;
+        margin-bottom: 25px;
+    }
+
+    .intro, .mechanism, .input, .cases {
+        margin-bottom: 25px;
+    }
+
+    .box {
+        background-color: #eef2f9;
+        padding: 15px 20px;
+        border-left: 5px solid #2c4870;
+        border-radius: 6px;
+        margin-top: 10px;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+    ul {
+        margin-top: 10px;
+        padding-left: 20px;
+    }
+
+    form {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    input[type="submit"] {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #2c4870;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #1f3554;
+    }
+</style>
+
+<div class="container">
+
+    <div class="intro">
+        <p>
+            Les deux mécanismes que vous avez découverts — <strong>Veto-Rank</strong> et <strong>Short Listing</strong> —
+            ont chacun leurs forces et leurs faiblesses.
+        </p>
+        <div class="box">
+            Pour tirer parti des avantages des deux, nous introduisons un <strong>mécanisme hybride</strong> qui combine les deux approches.
+        </div>
+    </div>
+
+    <div class="mechanism">
+        <p>
+            Le principe est simple : <strong>vous donnez toujours le même type d’input</strong>, quel que soit le mécanisme qui sera utilisé.
+            Ensuite, <strong>le mécanisme appliqué est tiré au hasard</strong> entre VR et SL.
+        </p>
+    </div>
+
+    <div class="input">
+        <div class="box">
+            <p><span class="bold">Input unique :</span> vous classez les 5 options (animaux) selon votre stratégie.</p>
+        </div>
+    </div>
+
+    <div class="cases">
+        <p>Ce classement est ensuite interprété différemment selon le mécanisme tiré au sort :</p>
+        <ul>
+            <li><strong>Si le mécanisme est Veto-Rank :</strong><br>
+                → Vos <strong>2 derniers voeux</strong> sont considérés comme <strong>veto</strong>.<br>
+                → Les <strong>3 premiers</strong> sont utilisés pour établir votre classement des restants.
+            </li>
+            <li><strong>Si le mécanisme est Short Listing :</strong>
+                <ul>
+                    <li><strong>Si vous êtes J1</strong> : vos <strong>3 premiers choix</strong> constituent la shortlist.</li>
+                    <li><strong>Si vous êtes J2</strong> : on choisit, parmi les 3 proposés, <strong>celui que vous avez le mieux classé</strong>.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <form method="post">
+        <input type="submit" value="Valider et voir un exemple">
+    </form>
+</div>
+
+
+{{ endblock }}

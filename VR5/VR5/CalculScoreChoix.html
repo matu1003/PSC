@@ -2,24 +2,42 @@
 {{ block title }}Résultats du round{{ endblock }}
 
 {{ block content }}
-<div id="score-container">
-    <span class="score-label">⭐ Score_total: <span class="score-value">{{ total_score }}</span></span>
+<div id="top-left">
+    👤 {{ participant.vars.pseudo }} — 🕒 Manche {{ player.round_number }} / 4
 </div>
 
-<h3>Choix Sélectionné</h3>
-    {% if final_choice == "Aucun choix possible" %}
-        <p>Aucun choix n'était possible après les vetos.</p>
-    {% else %}
-        <p>Le choix final sélectionné est : <strong>{{ final_choice }}</strong></p>
-    {% endif %}
+<div id="top-right">
+    ⭐ Score total : <span class="score-value">{{ total_score }}</span>
+</div>
 
-    <h3>Scores du Round</h3>
-    <ul>
-        <li>Joueur 1 : {{ score_p1 }} points</li>
-        <li>Joueur 2 : {{ score_p2 }} points</li>
-    </ul>
 
-    <p>Passons au prochain round.</p>
+    <style>
+      h2.page-header {
+  padding-top: 80px !important;
+    }
+    </style>
+
+    <div style="max-width: 600px; margin: 40px auto; padding: 25px; border-radius: 12px; background-color: #f4f6fb; box-shadow: 0 4px 12px rgba(0,0,0,0.1); font-family: 'Segoe UI', sans-serif;">
+
+        <h3 style="color: #2c4870; text-align: center; margin-bottom: 20px;">🎯 Choix Sélectionné</h3>
+
+        {% if final_choice == "Aucun choix possible" %}
+            <p style="text-align: center; color: #a94442;"><strong>Aucun choix</strong> n'était possible</p>
+        {% else %}
+            <p style="text-align: center; font-size: 18px;">Le choix final sélectionné est : <strong style="color: #b03a2e;">{{ final_choice }}</strong></p>
+        {% endif %}
+
+        <hr style="margin: 30px 0;">
+
+        <h3 style="color: #2c4870; text-align: center; margin-bottom: 15px;">📊 Scores de la manche</h3>
+        <ul style="list-style: none; padding: 0; font-size: 17px; text-align: center;">
+            <li>🧑‍🤝‍🧑 Joueur 1 : <strong style="color: #388e3c;">{{ score_p1 }} points</strong></li>
+            <li>🧑‍🤝‍🧑 Joueur 2 : <strong style="color: #388e3c;">{{ score_p2 }} points</strong></li>
+        </ul>
+
+        <p style="text-align: center; margin-top: 30px;">➡️ <em>Passons à la prochaine manche...</em></p>
+
+    </div>
 
 <form method="post">
     <button type="submit" class="btn btn-primary">Passer au prochain round</button>

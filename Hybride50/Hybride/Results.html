@@ -1,0 +1,92 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}Page des résultats{{ endblock }}
+
+{{ block content }}
+<div id="top-left">
+    👤 {{ participant.vars.pseudo }} — 🕒 Manche {{ player.round_number }} / 4
+</div>
+
+<div id="top-right">
+    ⭐ Score total : <span class="score-value">{{ total_score }}</span>
+</div>
+
+
+    <style>
+    h2.page-header {
+        padding-top: 80px !important;
+      }
+
+    body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f9f9f9;
+        padding: 60px;
+        text-align: center;
+        color: #333;
+    }
+
+    .result-box {
+        display: inline-block;
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 30px 50px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .result-title {
+        font-size: 1.4em;
+        color: #2c4870;
+        margin-bottom: 20px;
+    }
+
+    .final-choice {
+        font-size: 2em;
+        font-weight: bold;
+        color: #b03a2e;
+        margin-bottom: 30px;
+    }
+
+    .method {
+        font-size: 1.1em;
+        background-color: #eef2f9;
+        padding: 15px;
+        border-radius: 8px;
+        display: inline-block;
+        color: #2c4870;
+        border-left: 5px solid #2c4870;
+        margin-bottom: 40px;
+    }
+
+    form {
+     margin-top: 30px;
+ }
+
+ button {
+     padding: 10px 20px;
+     font-size: 16px;
+     background-color: #2c4870;
+     color: white;
+     border: none;
+     border-radius: 6px;
+     cursor: pointer;
+ }
+ button:hover {
+        background-color: #1f3554;
+    }
+</style>
+
+<div class="result-box">
+    <div class="result-title">Le choix final sélectionné est :</div>
+    <div class="final-choice">{{ group.choix_final }}</div>
+
+    {% if group.methode_utilisee == 1 %}
+        <div class="method">Méthode tirée au sort : <strong>Veto-Rank (VR)</strong></div>
+    {% elif group.methode_utilisee == 2 %}
+        <div class="method">Méthode tirée au sort : <strong>Short Listing (SL)</strong></div>
+    {% endif %}
+
+    <form method="post">
+      <button type="submit">Passer à l'étape suivante</button>
+    </form>
+</div>
+
+{{ endblock }}

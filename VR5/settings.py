@@ -1,6 +1,6 @@
 from os import environ
 SESSION_CONFIG_DEFAULTS = dict(real_world_currency_per_point=1, participation_fee=0)
-SESSION_CONFIGS = [dict(name='session2', num_demo_participants=None, app_sequence=['VR5']), dict(name='listebasique', num_demo_participants=None, app_sequence=['liste_aveugle_basique_3']), dict(name='my_session', num_demo_participants=None, app_sequence=['listef_connue_basique']), dict(name='VR_test', num_demo_participants=None, app_sequence=['VR3']), dict(name='vr_5', num_demo_participants=None, app_sequence=['VR5'])]
+SESSION_CONFIGS = [dict(name='session2', num_demo_participants=None, app_sequence=['VR5'])]
 LANGUAGE_CODE = 'en'
 REAL_WORLD_CURRENCY_CODE = 'USD'
 USE_POINTS = True

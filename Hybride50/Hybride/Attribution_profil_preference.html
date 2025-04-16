@@ -1,0 +1,62 @@
+{{ extends 'global/Page.html' }}
+{{ block title }} Voici vos préférences ainsi que celles de votre adversaire{{ endblock }}
+
+{{ block content }}
+<div id="top-left">
+    👤 {{ participant.vars.pseudo }} — 🕒 Manche {{ player.round_number }} / 4
+</div>
+
+<div id="top-right">
+    ⭐ Score total : <span class="score-value">{{ total_score }}</span>
+</div>
+
+
+    <style>
+        h2.page-header {
+          padding-top: 80px !important;
+        }
+
+        table {
+            width: 50%;  /* Élargir le tableau */
+            border-collapse: collapse;  /* Fusionner les bordures */
+            margin: 20px auto;  /* Centrer le tableau */
+            font-size: 18px;
+        }
+        th, td {
+            border: 2px solid black;  /* Bordures épaisses pour chaque case */
+            padding: 10px;  /* Ajout d'espace dans les cellules */
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;  /* Fond gris clair pour l'en-tête */
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;  /* Lignes alternées en gris clair */
+        }
+    </style>
+
+    <table>
+        <tr>
+            <th>Rang</th>
+            <th>Votre profil de préférences</th>
+            <th>Profil de l'adversaire</th>
+            <th>Récompense</th>
+        </tr>
+        {% for rank, my_choice, opp_choice, score in combined_profiles %}
+        <tr>
+            <td>{{ rank }}</td>
+            <td>{{ my_choice }}</td>
+            <td>{{ opp_choice }}</td>
+            <td>{{ score }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p>Vous pouvez passer à l'étape suivante. Ces préférences vous seront rappelées et il est donc inutile de les mémoriser. </p>
+
+<form method="post">
+    <button type="submit" class="btn btn-primary">Passer à l'étape suivante</button>
+</form>
+
+{{ endblock }}

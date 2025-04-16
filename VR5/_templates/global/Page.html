@@ -3,41 +3,54 @@
 
 {% block global_styles  %}
 <style>
-  #score-container {
-  position: fixed;
-  top: 10px;
-  right: 20px; /* Déplacement à droite */
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 15px;
-  font-size: 18px;
-  font-weight: bold;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
+
+  #top-left, #top-right {
+    position: fixed;
+    top: 20px;
+    padding: 12px 18px;
+    font-family: "Segoe UI", sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    z-index: 1000;
+    border-radius: 15px;
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+  }
+
+  #top-left {
+    left: 20px;
+    text-align: left;
+  }
+
+  #top-right {
+    right: 20px;
+    text-align: right;
+  }
+
+  .score-value {
+    color: #ffcc00;
+    margin-left: 6px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  h2.page-header {
+  padding-top: 100px !important;
 }
 
-.score-label {
-  display: flex;
-  align-items: center;
-}
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
 
-.score-value {
-  margin-left: 8px;
-  font-size: 22px;
-  font-weight: bold;
-  color: #ffcc00;
-}
-
-@keyframes pop {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-
-.score-value.updated {
-  animation: pop 0.3s ease-out;
-}
+  .score-value.updated {
+    animation: pop 0.3s ease-out;
+  }
 </style>
 
 {% endblock %}

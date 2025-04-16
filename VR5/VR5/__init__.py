@@ -37,6 +37,7 @@ def creating_session(subsession: Subsession):
         #Initialisation du score total via participant:
         for leplayer in [j1, j2]:
             leplayer.participant.vars["total_score"] = 0
+            leplayer.participant.vars["pseudo"] = ""
 
 
 class Group(BaseGroup):
@@ -87,6 +88,7 @@ def calcul_meilleur_choix(group: Group):
     group.final_choice=final_choice
 
 class Player(BasePlayer):
+    pseudo = models.StringField()
     preference_profile = models.StringField()
     opponent_profile = models.StringField()
     vetos = models.StringField()
@@ -101,6 +103,7 @@ class Player(BasePlayer):
     rank3 = models.StringField()
 class Page_Accueil(Page):
     form_model = 'player'
+    form_fields = ['pseudo']
     @staticmethod
     def is_displayed(player: Player):
         return player.round_number == 1
@@ -108,6 +111,13 @@ class Page_Accueil(Page):
     @staticmethod
     def vars_for_template(player: Player):
         return {'total_score': player.participant.vars["total_score"]}
+
+    def before_next_page(player: Player, timeout_happened):
+        player.participant.vars['pseudo'] = player.pseudo
+
+    def error_message(player: Player, values):
+        if values['pseudo'] == "":
+            return "Vous n'avez pas choisi de pseudo"
 
 class Presentation_VR(Page):
     form_model = 'player'
@@ -121,7 +131,7 @@ class Attribution_des_profils(Page):
         my_profile = player.preference_profile.split(",")
         opponent_profile = player.opponent_profile.split(",")
         combined_profiles = [
-                    (rank + 1, my_choice, opp_choice)
+                    (rank + 1, my_choice, opp_choice, 5-rank)
                     for rank, (my_choice, opp_choice) in enumerate(zip(my_profile, opponent_profile))
                 ]
         return {
@@ -138,7 +148,7 @@ class Veto_Et_Classement(Page):
         my_profile = player.preference_profile.split(",")
         opponent_profile = player.opponent_profile.split(",")
         combined_profiles = [
-                    (rank + 1, my_choice, opp_choice)
+                    (rank + 1, my_choice, opp_choice, 5 - rank)
                     for rank, (my_choice, opp_choice) in enumerate(zip(my_profile, opponent_profile))
                 ]
 
@@ -183,6 +193,8 @@ class CalculScoreChoix(Page):
             }
 
 class Attente_Avant_Resultat(WaitPage):
+    title_text = "Un instant..."
+    body_text = "En attente des autres joueurs pour le classement final"
     wait_for_all_groups = True
     def is_displayed(player: Player):
         return player.round_number == 4
@@ -196,13 +208,15 @@ class pageFinale(Page):
     def vars_for_template(player: Player):
         players = player.subsession.get_players()
         score = player.participant.vars["total_score"]
-        scores = [p.participant.vars["total_score"] for p in players]
-        scores.sort(reverse=True)
-        classement = 1+scores.index(score)
-        meilleur_score = scores[0]
+        scores = [(p.participant.vars["pseudo"],p.participant.vars["total_score"]) for p in players]
+        scores.sort(key=lambda x: x[1], reverse=True)
+        classement = 1+scores.index((player.participant.vars["pseudo"], score))
+        meilleur_score = scores[0][1]
+        leaderboard = [(i+1, ps, sc) for i, (ps, sc) in enumerate(scores)]
         return {"score": score,
                 "classement": classement,
-                "scorePrem": meilleur_score}
+                "scorePrem": meilleur_score,
+                "detail": leaderboard}
 
 
 page_sequence = [Page_Accueil, Presentation_VR, Attribution_des_profils, Veto_Et_Classement, Attente_Avant_Tirage_Score, CalculScoreChoix, Attente_Avant_Resultat, pageFinale]

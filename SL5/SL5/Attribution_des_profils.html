@@ -3,11 +3,20 @@
 
 {{ block content }}
 
-<div id="score-container">
-    <span class="score-label">⭐ Score_total: <span class="score-value">{{ total_score }}</span></span>
+<div id="top-left">
+    👤 {{ participant.vars.pseudo }} — 🕒 Manche {{ player.round_number }} / 4
 </div>
 
+<div id="top-right">
+    ⭐ Score total : <span class="score-value">{{ total_score }}</span>
+</div>
+
+
     <style>
+        h2.page-header {
+          padding-top: 80px !important;
+        }
+
         table {
             width: 50%;  /* Élargir le tableau */
             border-collapse: collapse;  /* Fusionner les bordures */
@@ -33,12 +42,14 @@
             <th>Rang</th>
             <th>Votre profil de préférences</th>
             <th>Profil de l'adversaire</th>
+            <th>Récompense</th>
         </tr>
-        {% for rank, my_choice, opp_choice in combined_profiles %}
+        {% for rank, my_choice, opp_choice, score in combined_profiles %}
         <tr>
             <td>{{ rank }}</td>
             <td>{{ my_choice }}</td>
             <td>{{ opp_choice }}</td>
+            <td>{{ score }}</td>
         </tr>
         {% endfor %}
     </table>

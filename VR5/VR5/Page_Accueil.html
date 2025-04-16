@@ -1,28 +1,105 @@
 {{ extends 'global/Page.html' }}
-{{ block title }}Présentation de l'expérience{{ endblock }}
+{{ block title }}Étude des sélections d'arbitre{{ endblock }}
 
 {{ block content }}
 
+<style>
+    body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        padding: 40px;
+        line-height: 1.6;
+    }
 
-<p>Merci de nous accorder un peu de votre temps ! L’expérience n’est pas censée durer plus de quelques minutes.
-Notre PSC s’intéresse aux mécanismes de choix dans une confrontation bilatérale avec un nombre fini d’options disponibles.
-Pour rendre ça plus clair, prenons un exemple : vous et votre ami devez décider d’une destination de vacances.
-Vous vous mettez d’accord sur quelques destinations, et vous avez chacun vos préférences sur les lieux.
-Nous étudions les mécanismes auquel vous pourriez jouer pour aboutir à une décision.
-</p>
-<p>Dans notre cas, il s’agira de choisir des animaux  de compagnie … particuliers.
-Vous allez réaliser successivement quatre manches d’affrontement en un contre un, avec différents adversaires tirés aléatoirement.
-Au début de chaque manche, des préférences vous seront imposées. Vous devez les respecter dans vos actions pour ne pas polluer l’expérience.
-Plus le résultat obtenu (l’animal) est classé haut dans vos préférences, plus vous marquez des points comme indiqué ci-dessous.
-Le but est d’obtenir le plus de point à la fin de l’expérience.
-</p>
-<p>Nous nous restreignons aux jeux avec connaissance parfaite, cela signifie que vous connaîtrez les préférences de vos adversaires.
-Celles-ci influenceront donc vos choix.
-</p>
+    .intro-container {
+        max-width: 800px;
+        margin: auto;
+        background-color: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
 
-<form method="post">
-    <button type="submit" class="btn btn-primary">Passer à l'étape suivante</button>
-</form>
+    h2 {
+        color: #2c4870;
+        text-align: center;
+        margin-bottom: 25px;
+    }
 
+    p {
+        margin-bottom: 20px;
+    }
+
+    .highlight {
+        background-color: #eef2f9;
+        padding: 10px 15px;
+        border-left: 4px solid #2c4870;
+        margin-bottom: 20px;
+        border-radius: 6px;
+    }
+
+    form {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    input[type="text"] {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        width: 60%;
+        max-width: 300px;
+    }
+
+    button {
+        margin-top: 15px;
+        padding: 10px 20px;
+        background-color: #2c4870;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #1f3554;
+    }
+</style>
+
+<div class="intro-container">
+    <h2>Bienvenue dans notre expérience !</h2>
+
+    <p>Merci de nous accorder un peu de votre temps. L’expérience ne devrait pas durer plus de quelques minutes.</p>
+
+    <div class="highlight">
+        <p>Notre PSC s’intéresse aux mécanismes de choix dans une confrontation bilatérale avec un nombre fini d’options disponibles.</p>
+        <p>Imaginez : vous et un ami devez choisir une destination de vacances. Vous avez chacun vos préférences, mais devez vous mettre d’accord. Quels mécanismes pouvez-vous utiliser pour parvenir à une décision ?</p>
+    </div>
+
+    <p>Dans notre cas, vous devrez choisir entre des animaux de compagnie... un peu particuliers 🐙🦜🐐</p>
+
+    <p>Vous participerez à quatre manches d’affrontement en un contre un, face à des adversaires tirés au hasard. À chaque manche :</p>
+    <ul>
+        <li>Des préférences vous seront imposées</li>
+        <li>Vous devrez respecter ces préférences pour que les résultats restent valides</li>
+        <li>Plus l’animal obtenu est haut dans vos préférences, plus vous marquez de points</li>
+    </ul>
+
+    <p>Le but : <strong>obtenir le plus de points possible</strong> à la fin des quatre manches !</p>
+
+    <div class="highlight">
+        <p>Nous travaillons dans un cadre de <strong>connaissance parfaite</strong> : vous connaîtrez les préférences de votre adversaire. Cela influencera directement votre stratégie.</p>
+    </div>
+
+    <p>Avant de commencer, choisissez un pseudo. Il apparaîtra dans le classement final 🏆</p>
+
+    <form method="post">
+        <input type="text" id="pseudo" name="pseudo" placeholder="Votre pseudo" required> <br>
+        <button type="submit">Passer à l'étape suivante</button>
+    </form>
+</div>
 
 {{ endblock }}

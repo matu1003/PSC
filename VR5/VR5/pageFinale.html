@@ -10,17 +10,43 @@
         <p class="lead">Voici un récapitulatif de vos performances :</p>
 
         <div class="alert alert-primary mt-3">
-            <h4>🏆 Votre classement : <strong>{{classement}}</strong></h4>
+            <h4>🏆 Votre classement : <strong>{{ classement }}</strong></h4>
         </div>
 
         <div class="alert alert-success">
-            <h4>🔢 Votre score : <strong>{{score}}</strong></h4>
+            <h4>🔢 Votre score : <strong>{{ score }}</strong></h4>
         </div>
 
         <div class="alert alert-warning">
-            <h4>🥇 Score du premier : <strong>{{scorePrem}}</strong></h4>
+            <h4>🥇 Score du premier : <strong>{{ scorePrem }}</strong></h4>
+        </div>
+
+        <div class="mt-4">
+            <h3>Classement Final</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>Pseudo</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+    {% for position, pseudo, score in detail %}
+    <tr {% if position == 1 %}class="table-warning"{% endif %}>
+        <td><span class="badge bg-secondary">{{ position }}</span></td>
+        <td>
+            {% if position == 1 %}🏆 {% endif %}
+            {{ pseudo }}
+        </td>
+        <td><strong>{{ score }}</strong></td>
+    </tr>
+    {% endfor %}
+</tbody>
+            </table>
         </div>
     </div>
 </div>
+<p class="mt-4 text-muted">👋 À bientôt pour une nouvelle session !</p>
 
 {{ endblock }}

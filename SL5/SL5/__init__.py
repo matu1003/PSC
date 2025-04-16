@@ -32,8 +32,10 @@ def creating_session(subsession: Subsession):
                 # Définition du profil de l'adversaire
         j1.opponent_profile = j2.preference_profile
         j2.opponent_profile = j1.preference_profile
-        j1.participant.vars["total_score"] = 0
-        j2.participant.vars["total_score"] = 0
+        for j in [j1, j2]:
+            j.participant.vars["total_score"] = 0
+            j.participant.vars["pseudo"] = ""
+
 
 class Group(BaseGroup):
     final_choice = models.StringField()
@@ -54,6 +56,7 @@ def calcul_meilleur_choix(group: Group):
                 # Ajout au score total
                 player.participant.vars["total_score"] += player.round_score
 class Player(BasePlayer):
+    pseudo = models.StringField()
     preference_profile = models.StringField()
     opponent_profile = models.StringField()
     selected_choice = models.StringField()
@@ -66,14 +69,29 @@ class Player(BasePlayer):
 
 class Page_Accueil(Page):
     form_model = 'player'
+    form_fields = ['pseudo']
     @staticmethod
     def is_displayed(player: Player):
         return player.round_number == 1
-class Presentation_VR(Page):
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return {'total_score': player.participant.vars["total_score"]}
+
+    def before_next_page(player: Player, timeout_happened):
+        player.participant.vars['pseudo'] = player.pseudo
+
+    def error_message(player: Player, values):
+        if values['pseudo'] == "":
+            return "Vous n'avez pas choisi de pseudo"
+
+class Presentation_SL(Page):
     form_model = 'player'
+
     @staticmethod
     def is_displayed(player: Player):
         return player.round_number == 1
+
 class Attribution_des_profils(Page):
     form_model = 'player'
     @staticmethod
@@ -81,7 +99,7 @@ class Attribution_des_profils(Page):
         my_profile = player.preference_profile.split(",")
         opponent_profile = player.opponent_profile.split(",")
         combined_profiles = [
-                    (rank + 1, my_choice, opp_choice)
+                    (rank + 1, my_choice, opp_choice, 5 - rank)
                     for rank, (my_choice, opp_choice) in enumerate(zip(my_profile, opponent_profile))
                 ]
         return {
@@ -90,7 +108,7 @@ class Attribution_des_profils(Page):
                     'combined_profiles': combined_profiles,  # Liste [(1, 'A', 'E'), (2, 'B', 'D'), ...]
                     'total_score': player.participant.vars["total_score"]
                 }
-class Veto(Page):
+class Choix(Page):
     form_model = 'player'
     form_fields = ['choix1', 'choix2', 'choix3']
     @staticmethod
@@ -103,7 +121,7 @@ class Veto(Page):
         my_profile = player.preference_profile.split(",")
         opponent_profile = player.opponent_profile.split(",")
         combined_profiles = [
-                    (rank + 1, my_choice, opp_choice)
+                    (rank + 1, my_choice, opp_choice, 5 - rank)
                     for rank, (my_choice, opp_choice) in enumerate(zip(my_profile, opponent_profile))
                 ]
 
@@ -154,7 +172,7 @@ class Choix_de_J2(Page):
 
 
         combined_profiles = [
-                    (rank + 1, my_choice, opp_choice)
+                    (rank + 1, my_choice, opp_choice, 5 - rank)
                     for rank, (my_choice, opp_choice) in enumerate(zip(my_profile, opponent_profile))
                 ]
 
@@ -187,6 +205,8 @@ class CalculScoreChoix(Page):
             }
 
 class Attente_Avant_Resultat(WaitPage):
+    title_text = "Un instant..."
+    body_text = "En attente des autres joueurs pour le classement final"
     wait_for_all_groups = True
     def is_displayed(player: Player):
         return player.round_number == 4
@@ -199,12 +219,14 @@ class pageFinale(Page):
     def vars_for_template(player: Player):
         players = player.subsession.get_players()
         score = player.participant.vars["total_score"]
-        scores = [p.participant.vars["total_score"] for p in players]
-        scores.sort(reverse=True)
-        classement = 1+scores.index(score)
-        meilleur_score = scores[0]
+        scores = [(p.participant.vars["pseudo"],p.participant.vars["total_score"]) for p in players]
+        scores.sort(key=lambda x: x[1], reverse=True)
+        classement = 1+scores.index((player.participant.vars["pseudo"], score))
+        meilleur_score = scores[0][1]
+        leaderboard = [(i+1, ps, sc) for i, (ps, sc) in enumerate(scores)]
         return {"score": score,
                 "classement": classement,
-                "scorePrem": meilleur_score}
+                "scorePrem": meilleur_score,
+                "detail": leaderboard}
 
-page_sequence = [Page_Accueil, Presentation_VR, Attribution_des_profils, Veto, J2_attente_veto_de_J1, Choix_de_J2, J1_attente_de_J2, CalculScoreChoix, Attente_Avant_Resultat, pageFinale]
+page_sequence = [Page_Accueil, Presentation_SL, Attribution_des_profils, Choix, J2_attente_veto_de_J1, Choix_de_J2, J1_attente_de_J2, CalculScoreChoix, Attente_Avant_Resultat, pageFinale]

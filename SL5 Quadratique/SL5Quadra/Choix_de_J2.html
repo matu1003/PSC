@@ -1,0 +1,79 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}Choix parmis les propositions{{ endblock }}
+
+{{ block content }}
+<div id="top-left">
+    👤 {{ participant.vars.pseudo }} — 🕒 Manche {{ player.round_number }} / 4
+</div>
+
+<div id="top-right">
+    ⭐ Score total : <span class="score-value">{{ total_score }}</span>
+</div>
+
+
+
+<h4> <i>Rappel des profils de préférences</i></h4>
+
+    <style>
+        h2.page-header {
+          padding-top: 80px !important;
+        }
+        
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            font-size: 18px;
+        }
+        th, td {
+            border: 2px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+
+    <table>
+      <tr>
+          <th>Rang</th>
+          <th>Votre profil de préférences</th>
+          <th>Score attribué</th>
+          <th>Profil de l'adversaire</th>
+      </tr>
+      {% for rank, my_choice, score, opp_choice in combined_profiles %}
+      <tr>
+          <td>{{ rank }}</td>
+          <td>{{ my_choice }}</td>
+          <td>{{ score }}</td>
+          <td>{{ opp_choice }}</td>
+      </tr>
+        {% endfor %}
+    </table>
+<h3>Choisissez le choix final</h3>
+
+<h4>Les choix suivants ont été choisis par le Joueur 1 :</h4>
+<p><b>{{ choix1 }}</b>, <b>{{ choix2 }}</b> et <b>{{choix3}}</b></p>
+
+<form method="post">
+    <p><b>Choisissez le choix final parmi les options restantes :</b></p>
+    <label for="rank1">Sélection finale :</label>
+    <select name="rank1" required>
+        <option value="">-- Sélectionnez --</option>
+        {% for option in remaining_choices %}
+            <option value="{{ option }}">{{ option }}</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+    <button type="submit" class="btn btn-primary">Valider le choix final</button>
+</form>
+
+
+
+{{ endblock }}
